@@ -32,6 +32,8 @@
                         </v-list-tile>
                     </v-list>
                 </v-navigation-drawer>
+
+                <!-- MAIN BLOG PAGE -->
                 <v-container grid-list-lg fluid v-if="page == 'blog'">
                     <v-layout>
                         <v-flex xs3></v-flex>
@@ -47,9 +49,24 @@
                             <v-layout column>
                                 <v-flex v-for="post in sorted_posts">
                                     <v-card elevation="18">
+                                      <v-btn icon
+                                      class="right"
+                                      v-on:click="deletePost(post)"
+                                      >
+                                      <!-- v-if="show_delete" -->
+                                        <v-icon color="red">delete<v-icon>
+                                      </v-btn>
+                                      <v-btn icon
+                                      class="right"
+                                      v-on:click="changeToEditPost(post)"
+                                      >
+                                      <!-- v-if="show_delete" -->
+                                        <v-icon color="black">edit<v-icon>
+                                      </v-btn>
                                         <v-img
                                             v-bind:src="post.image"
                                             height="200">
+
                                         </v-img>
                                         <v-card-title>
                                             <span class="headline text-uppercase">
@@ -80,6 +97,8 @@
                         <v-flex xs3></v-flex>
                     </v-layout>
                 </v-container>
+
+                <!-- POST PAGE -->
                 <v-container v-if="page == 'post'">
                     <v-layout>
                         <v-flex xs3></v-flex>
@@ -121,6 +140,55 @@
                                 </v-card-text>
                                 <v-card-actions>
                                     <v-btn block @click="addPost()">post</v-btn>
+                                </v-card-actions>
+                            </v-card>
+                        </v-flex>
+                        <v-flex xs3></v-flex>
+                    </v-layout>
+                </v-container>
+
+                <!-- EDIT POST PAGE -->
+                <v-container v-if="page == 'editPost'">
+                    <v-layout>
+                        <v-flex xs3></v-flex>
+                        <v-flex xs6>
+                            <v-card elevation="18">
+                                <v-card-title class="display-1 justify-center">Edit Post</v-card-title>
+                                <v-card-text>
+                                    <v-text-field
+                                        label="Title"
+                                        v-model="new_title"
+                                        outline
+                                        color="grey">
+                                    </v-text-field>
+                                    <v-text-field
+                                        label="Author"
+                                        v-model="new_author"
+                                        outline
+                                        color="grey">
+                                    </v-text-field>
+                                    <v-select
+                                        :items="categories"
+                                        v-model="new_category"
+                                        outline
+                                        color="grey"
+                                        label="Select a category">
+                                    </v-select>
+                                    <v-text-field
+                                        label="Image Link"
+                                        v-model="new_image"
+                                        outline
+                                        color="grey">
+                                    </v-text-field>
+                                    <v-textarea
+                                        outline
+                                        v-model="new_text"
+                                        label="Text"
+                                        color="grey">
+                                    </v-textarea>
+                                </v-card-text>
+                                <v-card-actions>
+                                    <v-btn block @click="editPost()">Submit Changes</v-btn>
                                 </v-card-actions>
                             </v-card>
                         </v-flex>
